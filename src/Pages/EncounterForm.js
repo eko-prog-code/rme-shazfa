@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import './EncounterForm.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { API_SATU_SEHAT, IS_DEV } from '../utils/constant'
 
 const EncounterForm = () => {
   const navigate = useNavigate()
@@ -142,7 +141,7 @@ const EncounterForm = () => {
 
     setLoading(true)
     axios
-      .post(IS_DEV ? '/Encounter' : `${API_SATU_SEHAT}/Encounter`, data, {
+      .post('/Encounter', data, {
         headers: {
           Authorization: `Bearer ${tokenFromFirebase}`,
           'Content-Type': 'application/json',
