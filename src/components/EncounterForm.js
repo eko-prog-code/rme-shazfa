@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 
 const EncounterForm = ({ datas }) => {
+  const apiUrl = process.env.REACT_APP_API_URL || "https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1";
+  const PostEncounter = `${apiUrl}/Encounter`;
   const [accessToken, setAccessToken] = useState(null);
   const [formData, setFormData] = useState(() => {
     // Function to format the date
@@ -150,7 +152,7 @@ const EncounterForm = ({ datas }) => {
 
     setLoading(true);
     axios
-      .post("/Encounter", data, {
+      .post(PostEncounter, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
