@@ -4,7 +4,14 @@ const cors = require('cors'); // Import paket cors
 const app = express();
 
 // Middleware untuk menangani CORS
-app.use(cors()); // Gunakan middleware cors
+// Middleware untuk menangani CORS
+app.use(cors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Middleware untuk meng-handle JSON body pada request
 app.use(express.json());
