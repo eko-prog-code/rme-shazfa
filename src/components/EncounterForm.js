@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 
 const EncounterForm = ({ datas }) => {
-  const apiUrl = "https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1";
+  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000"; // Sesuaikan dengan URL server lokal Anda
+  const postEncounterEndpoint = `${apiUrl}/api/submitEncounter`;
   const [accessToken, setAccessToken] = useState(null);
   const [formData, setFormData] = useState(() => {
     // Function to format the date
@@ -150,21 +151,19 @@ const EncounterForm = ({ datas }) => {
     };
 
     setLoading(true);
-    axios({
-      method: "post",
-      url: `${apiUrl}/Encounter`,
-      data: data,
-      headers: {
-        "Authorization": `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      console.log("data: ", res);
-      resetForm();
-    })
-    .catch((err) => console.error("Gagal mengirim data:", err.response))
-    .finally(() => setLoading(false));
+    axios
+      .post(postEncounterEndpoint, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("data: ", res);
+        resetForm();
+      })
+      .catch((err) => console.error("Gagal mengirim data:", err.response))
+      .finally(() => setLoading(false));
   };
 
   return (
