@@ -5,7 +5,7 @@ import Button from "./ui/Button";
 
 const EncounterForm = ({ datas }) => {
   const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000"; // Sesuaikan dengan URL server lokal Anda
-  const postEncounterEndpoint = `${apiUrl}/api/submitEncounter`;
+  const postEncounterEndpoint = `${apiUrl}/Encounter`;  // Sesuaikan dengan endpoint di server
   const [accessToken, setAccessToken] = useState(null);
   const [formData, setFormData] = useState(() => {
     // Function to format the date

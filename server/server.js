@@ -1,20 +1,16 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors'); // Import paket cors
 const app = express();
 
 // Middleware untuk menangani CORS
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // Atur domain klien yang diizinkan
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
+app.use(cors()); // Gunakan middleware cors
 
 // Middleware untuk meng-handle JSON body pada request
 app.use(express.json());
 
 // Endpoint untuk menerima data dari EncounterForm.js
-app.post('/api/submitEncounter', async (req, res) => {
+app.post('/Encounter', async (req, res) => { // Ubah endpoint menjadi '/Encounter'
     console.log('Received request with payload:', req.body);
 
     try {
