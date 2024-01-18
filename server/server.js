@@ -1,23 +1,23 @@
 const express = require('express');
 const axios = require('axios');
-const cors = require('cors'); // Import paket cors
+const cors = require('cors');
 const app = express();
 
 // Middleware untuk menangani CORS
-// Middleware untuk menangani CORS
 app.use(cors({
-    origin: '*',
+    origin: 'https://rme-shazfa.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
 }));
 
 // Middleware untuk meng-handle JSON body pada request
 app.use(express.json());
 
 // Endpoint untuk menerima data dari EncounterForm.js
-app.post('/Encounter', async (req, res) => { // Ubah endpoint menjadi '/Encounter'
+app.post('/Encounter', async (req, res) => {
     console.log('Received request with payload:', req.body);
 
     try {
@@ -33,7 +33,8 @@ app.post('/Encounter', async (req, res) => { // Ubah endpoint menjadi '/Encounte
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
-            }
+            },
+            withCredentials: true, // tambahkan ini jika menggunakan kredensial
         });
 
         // Respon dari endpoint eksternal diteruskan kembali ke EncounterForm.js
