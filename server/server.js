@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-    origin: 'https://rme-shazfa.vercel.app/encounter', // Replace with your actual frontend domain
+    origin: 'https://rme-shazfa.vercel.app', // Replace with your actual frontend domain
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
