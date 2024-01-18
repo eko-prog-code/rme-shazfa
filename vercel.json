@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/Encounter", "dest": "https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1/Encounter" }
+    { "src": "/Encounter", "dest": "http://localhost:5000/Encounter" }
   ]
 }
