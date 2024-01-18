@@ -1,15 +1,5 @@
 {
   "routes": [
-    {
-      "src": "/Encounter",
-      "methods": ["POST"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Credentials": "true"
-      },
-      "dest": "server.js"
-    }
+    { "src": "/Encounter", "dest": "https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1/Encounter" }
   ]
 }
