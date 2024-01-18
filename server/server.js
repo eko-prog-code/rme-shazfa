@@ -34,10 +34,11 @@ app.post('/Encounter', async (req, res) => {
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
-            withCredentials: true, // tambahkan ini jika menggunakan kredensial
+            withCredentials: true,
         });
 
         // Respon dari endpoint eksternal diteruskan kembali ke EncounterForm.js
+        res.header('Access-Control-Allow-Origin', 'https://rme-shazfa.vercel.app'); // Tambahkan header ini
         res.json(response.data);
     } catch (error) {
         console.error('Error:', error.message);
