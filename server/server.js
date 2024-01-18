@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-    origin: 'https://rme-shazfa.vercel.app', // Replace with your actual frontend domain
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
@@ -14,14 +14,12 @@ app.use(cors({
 
 app.use(express.json());
 
-app.post('/processAndPost', async (req, res) => {
+app.post('/Encounter', async (req, res) => {
     console.log('Received request with payload:', req.body);
 
     try {
         const encounterData = req.body;
         const accessToken = req.headers.authorization.replace('Bearer ', '');
-
-        // Process the form data or perform any necessary actions
 
         // Use cURL to post data to the external endpoint
         const apiEndpoint = 'https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1/Encounter';
@@ -36,11 +34,7 @@ app.post('/processAndPost', async (req, res) => {
 
             // Assuming the API response is in JSON format
             const responseData = JSON.parse(stdout);
-
-            // Optionally, you can process responseData further
-
-            // Send the processed data or response back to the client
-            res.json({ success: true, data: responseData });
+            res.json(responseData);
         });
     } catch (error) {
         console.error('Error:', error.message);
