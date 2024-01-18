@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "src": "/api/Encounter",
+      "src": "/Encounter",
       "methods": ["POST"],
       "headers": {
         "Access-Control-Allow-Origin": "https://rme-shazfa.vercel.app",
@@ -9,7 +9,7 @@
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Access-Control-Allow-Credentials": "true"
       },
-      "dest": "server/server.js"
+      "dest": "server.js"
     }
   ]
 }
