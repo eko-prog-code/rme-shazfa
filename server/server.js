@@ -1,8 +1,10 @@
 const express = require('express');
-const axios = require('axios');
-const { exec } = require('child_process');
+const fetch = require('node-fetch');
 const cors = require('cors');
+const axios = require('axios'); // Import modul axios
+
 const app = express();
+const port = 5000;
 
 app.use(cors({
     origin: '*',
@@ -14,35 +16,35 @@ app.use(cors({
 
 app.use(express.json());
 
-app.post('/Encounter', async (req, res) => {
-    console.log('Received request with payload:', req.body);
+app.post('/forward-request', async (req, res) => {
+  try {
+    // Ambil token dari Firebase Realtime Database
+    const firebaseTokenUrl = "https://rme-shazfa-mounira-default-rtdb.firebaseio.com/token.json";
+    const response = await axios.get(firebaseTokenUrl);
+    const accessToken = response.data.token; // Sesuaikan dengan struktur data Anda
 
-    try {
-        const encounterData = req.body;
-        const accessToken = req.headers.authorization.replace('Bearer ', '');
+    const apiUrl = 'https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1/Encounter';
 
-        // Use cURL to post data to the external endpoint
-        const apiEndpoint = 'https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1/Encounter';
-        const curlCommand = `curl -X POST ${apiEndpoint} -H "Authorization: Bearer ${accessToken}" -H "Content-Type: application/json" -d '${JSON.stringify(encounterData)}'`;
+    // Log the curl command to the console
+    console.log(`curl -X POST "${apiUrl}" -H "Content-Type: application/json" -H "Authorization: Bearer ${accessToken}" -d '${JSON.stringify(req.body)}'`);
 
-        exec(curlCommand, (error, stdout, stderr) => {
-            if (error) {
-                console.error('Error:', error.message);
-                res.status(500).json({ error: 'Internal Server Error' });
-                return;
-            }
+    const apiResponse = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(req.body),
+    });
 
-            // Assuming the API response is in JSON format
-            const responseData = JSON.parse(stdout);
-            res.json(responseData);
-        });
-    } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    const responseData = await apiResponse.json();
+    res.json(responseData);
+  } catch (error) {
+    console.error('Error forwarding request:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log(`Server berjalan di port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
