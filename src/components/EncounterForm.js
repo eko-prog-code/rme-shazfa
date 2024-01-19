@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import Button from "./ui/Button";
 
 const EncounterForm = ({ datas }) => {
-  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000"; // Sesuaikan dengan URL server lokal Anda
-  const postEncounterEndpoint = `${apiUrl}/Encounter`;  // Sesuaikan dengan endpoint di server
   const [accessToken, setAccessToken] = useState(null);
   const [formData, setFormData] = useState(() => {
     // Function to format the date
@@ -88,6 +86,7 @@ const EncounterForm = ({ datas }) => {
       .catch((err) => console.log(err));
   };
   const saveData = async () => {
+    const postEncounterEndpoint = 'http://localhost:5000/forward-request'; // Update with your server endpoint
     const data = {
       resourceType: "Encounter",
       status: "arrived",
